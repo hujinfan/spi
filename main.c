@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "serial.h"
 #include "i2c.h"
+#include "gpio_spi.h"
+#include "oled.h"
 
 unsigned char at24cxx_read(unsigned char address);
 void at24cxx_write(unsigned char address, unsigned char data);
@@ -15,7 +17,12 @@ int main()
 	int data;
     
     uart0_init();   // 波特率115200，8N1(8个数据位，无校验位，1个停止位)
-    
+
+	SPIInit();
+	OLEDInit();
+	OLEDPrint(0,0,"hujinfan learning SPI");
+	
+	
     i2c_init();
     
     while (1)
