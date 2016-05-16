@@ -8,7 +8,7 @@ static void OLED_Set_DC(char val)
 	if(val)
 		GPGDAT |= (1<<4);
 	else
-		GPGDAT |= ~(1<<4);	
+		GPGDAT &= ~(1<<4);	
 }
 
 static void OLED_Set_CS(char val)
@@ -16,7 +16,7 @@ static void OLED_Set_CS(char val)
 	if(val)
 		GPFDAT |= (1<<1);
 	else
-		GPFDAT |= ~(1<<1);	
+		GPFDAT &= ~(1<<1);	
 }
 
 static void OLEDWriteCmd(unsigned char cmd)
@@ -133,7 +133,7 @@ void OLEDInit(void)
  */
 void OLEDPrint(int page, int col, char *str)
 {
-	int i;
+	int i = 0;
 	while(str[i])
 	{
 		OLEDPutChar(page, col, str[i]);

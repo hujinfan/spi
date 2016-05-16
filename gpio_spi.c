@@ -2,7 +2,7 @@
 
 /* 用GPIO模拟SPI */
 
-static void SPIO_GPIO_INIT(void)
+static void SPI_GPIO_INIT(void)
 {
 	/* GPF1 OLED_CSn output */
     GPFCON &= ~(3<<(1*2)); //set to 0
@@ -24,7 +24,7 @@ static void SPI_Set_CLK(char val)
 	if(val)
 		GPGDAT |= (1<<7);
 	else
-		GPGDAT |= ~(1<<7);
+		GPGDAT &= ~(1<<7);
 }
 
 static void SPI_Set_DO(char val)
@@ -32,7 +32,7 @@ static void SPI_Set_DO(char val)
 	if(val)
 		GPGDAT |= (1<<6);
 	else
-		GPGDAT |= ~(1<<6);
+		GPGDAT &= ~(1<<6);
 }
 
 void SPISendByte(unsigned char val)
@@ -51,5 +51,5 @@ void SPISendByte(unsigned char val)
 void SPIInit(void)
 {
 	/*初始化引脚*/
-	SPIO_GPIO_INIT();
+	SPI_GPIO_INIT();
 }
