@@ -30,7 +30,13 @@ int main()
 	sprintf(str,"SPI: %02x,%02x",mid,pid);
 	OLEDPrint(4,0,str);
 	
+	SPIFlashInit();
 	
+	SPIFlashEraseSector(4096);
+	SPIFlashProgram(4096, "hujinfan", 9);
+	SPIFlashRead(4096, str, 9);
+	printf("SPI Flash read from 4096: %s\n\r",str);
+	OLEDPrint(6,0,str);
 	
     i2c_init();
     
