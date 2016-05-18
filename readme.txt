@@ -49,3 +49,10 @@
 3.git tag v7
 4.git push origin master
 5.git push origin --tags
+
+°æ±¾8
+1.git add -A
+2.git commit -m "v8, use spi controller"
+3.git tag v8
+4.git push origin master
+5.git push origin --tags

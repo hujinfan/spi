@@ -1,6 +1,6 @@
 #include "spi_flash.h"
 #include "s3c24xx.h"
-#include "gpio_spi.h"
+#include "s3c2440_spi.h"
 
 static void SPIFlash_Set_CS(char val)
 {
