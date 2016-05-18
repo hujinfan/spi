@@ -79,7 +79,7 @@ void OLEDPutChar(int page, int col, char c)
 		OLEDWriteDat(dots[i+8]);
 }
 
-static OLEDClear(void)
+static void OLEDClean(void)
 {
 	int page, i;
 	for(page=0; page<8; page++)
@@ -121,7 +121,7 @@ void OLEDInit(void)
 
 	OLEDSetPageAddrMode();
 
-    OLEDClear();
+    OLEDClean();
 	
     OLEDWriteCmd(0xAF); /*display ON*/ 
 }
@@ -146,4 +146,14 @@ void OLEDPrint(int page, int col, char *str)
 		i++;
 	}
 }
+
+/* 清除某一页数据 */
+void OLEDCleanPage(int page)
+{
+	int i;
+	OLEDSetPos(page, 0);
+	for(i=0; i<128; i++)
+	OLEDWriteDat(0);
+}
+
 

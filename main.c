@@ -38,101 +38,19 @@ int main()
 	printf("SPI Flash read from 4096: %s\n\r",str);
 	OLEDPrint(4,0,str);
 
-	Test_Adc();
+	i2c_init();
+	at24cxx_write(0, 0x55);
+	data = at24cxx_read(0);
+
+	OLEDCleanPage(2);
+	OLEDCleanPage(3);
 	
-    i2c_init();
-    
-    while (1)
-    {
-        printf("\r\n##### AT24CXX Menu #####\r\n");
-        printf("[R] Read AT24CXX\n\r");
-        printf("[W] Write AT24CXX\n\r");
-        printf("Enter your selection: ");
-
-        c = getc();
-        printf("%c\n\r", c);
-        switch (c)
-        {
-            case 'r':
-            case 'R':
-            {
-                printf("Enter address: ");
-                i = 0;
-                do
-                {
-                    c = getc();
-                    str[i++] = c;
-                    putc(c);
-                } while(c != '\n' && c != '\r');
-                str[i] = '\0';
-
-                while(--i >= 0)
-                {
-                    if (str[i] < '0' || str[i] > '9')
-                        str[i] = ' ';
-                }
-
-                sscanf(str, "%d", &address);
-				printf("\r\nread address = %d\r\n", address);
-				data = at24cxx_read(address);
-				printf("data = %d\r\n", data);
-                    
-                break;
-            }
-            
-            case 'w':
-            case 'W':
-            {
-                printf("Enter address: ");
-                i = 0;
-                do
-                {
-                    c = getc();
-                    str[i++] = c;
-                    putc(c);
-                } while(c != '\n' && c != '\r');
-                str[i] = '\0';
-				printf("\r\n");
-
-                while(--i >= 0)
-                {
-                    if (str[i] < '0' || str[i] > '9')
-                        str[i] = ' ';
-                }
-
-                sscanf(str, "%d", &address);
-				//printf("get str %s\r\n", str);
-
-                printf("Enter data: ");
-                i = 0;
-                do
-                {
-                    c = getc();
-                    str[i++] = c;
-                    putc(c);
-                } while(c != '\n' && c != '\r');
-                str[i] = '\0';
-				printf("\r\n");
-				//printf("get str %s\r\n", str);
-
-                while(--i >= 0)
-                {
-                    if (str[i] < '0' || str[i] > '9')
-                        str[i] = ' ';
-                }
-
-                sscanf(str, "%d", &data);
-				//address = 12;
-				//data = 13;
-				printf("write address %d with data %d\r\n", address, data);
-				
-				at24cxx_write(address, data);
-
-                break;
-            }
-        }
-        
-    }
+	if(data == 0x55)
+		OLEDPrint(2,0,"I2C OK!");
+	else
+		OLEDPrint(2,0,"I2C Err!");
+		
+	Test_Adc();
     
     return 0;
 }

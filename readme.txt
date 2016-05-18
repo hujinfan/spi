@@ -42,3 +42,10 @@
 3.git tag v6
 4.git push origin master
 5.git push origin --tags
+
+°æ±¾7
+1.git add -A
+2.git commit -m "v7, i2c test"
+3.git tag v7
+4.git push origin master
+5.git push origin --tags
