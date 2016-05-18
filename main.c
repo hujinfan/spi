@@ -22,13 +22,13 @@ int main()
 
 	SPIInit();
 	OLEDInit();
-	OLEDPrint(0,0,"hujinfan learning spi");
+	OLEDPrint(0,0,"hjf study spi");
 
 	SPIFlashReadID(&mid, &pid);
 	printf("SPI Flash: MID = 0x%02x, PID=0x%02x\n\r",mid,pid);
 
-	sprintf(str,"SPI: %02x,%02x",mid,pid);
-	OLEDPrint(4,0,str);
+	sprintf(str,"spi: %02x,%02x",mid,pid);
+	OLEDPrint(2,0,str);
 	
 	SPIFlashInit();
 	
@@ -36,7 +36,9 @@ int main()
 	SPIFlashProgram(4096, "hujinfan", 9);
 	SPIFlashRead(4096, str, 9);
 	printf("SPI Flash read from 4096: %s\n\r",str);
-	OLEDPrint(6,0,str);
+	OLEDPrint(4,0,str);
+
+	Test_Adc();
 	
     i2c_init();
     

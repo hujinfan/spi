@@ -8,13 +8,14 @@ OBJDUMP = arm-linux-objdump
 INCLUDEDIR 	:= $(shell pwd)/include
 CFLAGS 		:= -Wall -O2
 CPPFLAGS   	:= -nostdinc -I$(INCLUDEDIR)
+LDFLASG     := -L $(shell dirname `$(CC) $(CFLAGS) -print-libgcc-file-name`) -lgcc
 
 export 	CC LD OBJCOPY OBJDUMP INCLUDEDIR CFLAGS CPPFLAGS AR
 
-objs := head.o init.o nand.o interrupt.o i2c.o gpio_spi.o oled.o spi_flash.o at24cxx.o serial.o main.o lib/libc.a
+objs := head.o init.o nand.o interrupt.o i2c.o gpio_spi.o oled.o spi_flash.o adc_ts.o at24cxx.o serial.o main.o lib/libc.a
 
 i2c.bin: $(objs)
-	${LD} -Ti2c.lds -o i2c_elf $^
+	${LD} -Ti2c.lds -o i2c_elf $^ ${LDFLASG}
 	${OBJCOPY} -O binary -S i2c_elf $@
 	${OBJDUMP} -D -m arm i2c_elf > i2c.dis
 
